@@ -1,0 +1,75 @@
+<h3 style="cursor: pointer; color: blueviolet;" (click)="toggleRoomDetailsOptions()">{{listName}}</h3>
+<div *ngIf="!showRoomDetailsInTable">
+    <ol>
+        <li *ngFor="let roomDetails of roomList; let i = index; let o = odd; let e = even">
+            {{i+1}} Odd:{{o}} Even:{{e}}
+            <p *ngFor="let roomDetail of roomDetails | keyvalue; let i=index">{{i+1}}
+
+                <span *ngIf="roomDetail.key !== 'roomType'">
+                    <strong>{{roomDetail.key}}</strong>: {{roomDetail.value}}
+                </span>
+                <span *ngIf="roomDetail.key === 'roomType'">
+
+                    <span [ngSwitch]="roomDetail.value">
+                        <span *ngSwitchCase="'TERI_AUKAT_SE_BAHAR'" style="color: red;">
+                            <strong>{{roomDetail.key}}</strong>: {{roomDetail.value}}
+                        </span>
+                        <span *ngSwitchCase="'LUXURY'" style="color: blue;">
+                            <strong>{{roomDetail.key}}</strong>: {{roomDetail.value}}
+                        </span>
+                        <span *ngSwitchCase="'NORMAL'" style="color: green;">
+                            <strong>{{roomDetail.key}}</strong>: {{roomDetail.value}}
+                        </span>
+                        <span *ngSwitchDefault style="color: black;">
+                            <strong>{{roomDetail.key}}</strong>: {{roomDetail.value}}
+                        </span>
+                    </span>
+                </span>
+            </p>
+            <p *ngIf="!isListForSelectedRooms"><button class="btn btn-success" (click)="selectRoom(roomDetails)">Ye Room Chahiye Apan Ko!</button></p>
+            <hr>
+        </li>
+    </ol>
+</div>
+<div *ngIf="showRoomDetailsInTable">
+    <table class="table table-hover table-bordered border-info table-responsive">
+        <thead class="table-dark">
+            <tr>
+                <th>Sr.No.</th>
+                <th>Room Number</th>
+                <th>Floor</th>
+                <th>Room Type</th>
+                <th>Amenities</th>
+                <th>Price</th>
+                <th>Rating</th>
+                <th>Photo</th>
+                <th>Checkin Time</th>
+                <th>Checkout Time</th>
+                <th>Select</th>
+            </tr>
+        </thead>
+        <tbody>
+            <!-- slice pipe can be used as | slice: 2:5; -->
+            <tr *ngFor="let roomDetails of roomList; let i = index; let o = odd; let e = even">
+                <td>{{i}}</td>
+                <td>{{roomDetails.roomNumber}}</td>
+                <td>{{roomDetails.floor}}</td>
+                <td>{{roomDetails.roomType | lowercase}}</td>
+                <td>{{roomDetails.amenities.join(", ") | uppercase}}</td>
+                <td>{{roomDetails.price | currency : 'INR'}}</td>
+                <td>{{roomDetails.rating | number : '2.3-5': 'en-us'}}</td>
+                <td>{{roomDetails.photo | titlecase}}</td>
+                <td>{{roomDetails.checkinTime}}</td>
+                <td>{{roomDetails.checkoutTime}}</td>
+                <td *ngIf="!isListForSelectedRooms"><button class="btn btn-success" (click)="selectRoom(roomDetails)">Ye
+                        Room Chahiye Apan Ko!</button></td>
+            </tr>
+        </tbody>
+
+
+    </table>
+</div>
+<div *ngIf="isListForSelectedRooms">
+    <button class="btn btn-danger" (click)="finalizeAllRooms()">Final Karo</button>
+</div>
+

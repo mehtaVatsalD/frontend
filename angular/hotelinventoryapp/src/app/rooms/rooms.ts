@@ -17,6 +17,7 @@ interface RoomDetails {
     floor: number;
     price: number;
     photo: string;
+    rating: number;
     checkinTime: Date;
     checkoutTime: Date;
 }

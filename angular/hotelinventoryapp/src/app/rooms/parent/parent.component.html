@@ -1,0 +1,12 @@
+<div style="border: 2px solid red; margin: 10px;">
+    <h2>Parent Component</h2>
+    <p>This tests for ngChages via internal update and proper metodical update</p>
+    <p><strong>Bad Data:</strong> {{badData}}</p>
+    <p><strong>Good Data:</strong> {{goodData}}</p>
+    <button class="btn btn-primary" (click)="changeBadData()">Change Bad Data</button>
+    <button class="btn btn-primary" (click)="changeGoodData()">Change Good Data</button>
+</div>
+<hinv-super-grandc
+    [badData]="badData"
+    [goodData]="goodData"
+></hinv-super-grandc>

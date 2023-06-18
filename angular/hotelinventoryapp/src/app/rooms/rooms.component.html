@@ -6,7 +6,7 @@
 <p [ngStyle]="isHotelOpen ? {color: 'green'}: {color: 'red'}" [innerText]="rooms | json"></p>
 
 <p>is hotel open for booking: {{isHotelOpen ? "yes" : "no"}}</p>
-<button (click)="toggle()">Change hotel status</button>
+<button (click)="toggle()" class="btn btn-primary">Change hotel status</button>
 
 
 <p style="color: green;" *ngIf="rooms.availableRooms > 0 && isHotelOpen">Book your rooms now!</p>
@@ -19,38 +19,19 @@
 <button (click)="freeAllRooms()" *ngIf="rooms.bookedRooms > 0 && isHotelOpen">Free All Rooms</button>
 
 <hr>
-<h3>Rooms</h3>
-<ol>
-    <li *ngFor="let roomDetails of roomList; let i = index">
-        {{i+1}}
-        <p *ngFor="let roomDetail of roomDetails | keyvalue; let i=index">{{i+1}}
-        
-            <span *ngIf="roomDetail.key !== 'roomType'">
-                <strong>{{roomDetail.key}}</strong>: {{roomDetail.value}}
-            </span>
-            <span *ngIf="roomDetail.key === 'roomType'">
+<!-- [toggleRoomDetailsOptions]="toggleRoomDetailsOptions" -->
+<div *ngIf="roomList.length != 0">
+    <hinv-rooms-list [listName]="'Available Rooms\''" [roomList]="roomList"
+        [showRoomDetailsInTable]="showRoomDetailsInTable" [isListForSelectedRooms]="false"
+        (selectedRoom)="selectRoom($event)"></hinv-rooms-list>
+    <hr>
+</div>
+<div *ngIf="selectedRooms.length != 0">
+    <hinv-rooms-list [roomList]="selectedRooms" [listName]="'Selected Rooms'"
+        [showRoomDetailsInTable]="showRoomDetailsInTable" [isListForSelectedRooms]="true"
+        (selectedRoom)="selectRoom($event)" (finalize)="finalizeAllRooms()"></hinv-rooms-list>
 
-                <span [ngSwitch]="roomDetail.value">
-                    <span *ngSwitchCase="'TERI_AUKAT_SE_BAHAR'" style="color: red;">
-                        <strong>{{roomDetail.key}}</strong>: {{roomDetail.value}}
-                    </span>
-                    <span *ngSwitchCase="'LUXURY'" style="color: blue;">
-                        <strong>{{roomDetail.key}}</strong>: {{roomDetail.value}}
-                    </span>
-                    <span *ngSwitchCase="'NORMAL'" style="color: green;">
-                        <strong>{{roomDetail.key}}</strong>: {{roomDetail.value}}
-                    </span>
-                    <span *ngSwitchDefault style="color: black;">
-                        <strong>{{roomDetail.key}}</strong>: {{roomDetail.value}}
-                    </span>
-                </span>
-
-            </span>
-           
-    
-            
-        
-        </p>
-        <hr>
-    </li>
-</ol>
+    <hr>
+</div>
+<hinv-parent [badData]="badData" [goodData]="goodData" (goodDataChanger)="changeGoodData()"></hinv-parent>
+<hinv-sibling [badData]="badData" [goodData]="goodData"></hinv-sibling>

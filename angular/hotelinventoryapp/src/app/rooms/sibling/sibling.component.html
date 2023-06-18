@@ -1,0 +1,8 @@
+<div style="border: 2px solid red; margin: 10px;">
+    <h2>Sibling Component</h2>
+    <p>This tests for ngChages via internal update and proper metodical update</p>
+    <p><strong>Bad Data:</strong> {{badData}}</p>
+    <p><strong>Good Data:</strong> {{goodData}}</p>
+    <p>Change Bad data in Parent component. You will see that parent's child i.e. grand child component is updated however sibling is not. This is because bad data's state is changed internally in parent.</p>
+    <p>Now try to change good data. You can see all three parent, grand child and sibling components are updated. This is because good data is changed via even emission using @Output()</p>
+</div>

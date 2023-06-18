@@ -71,16 +71,16 @@ e.g.
 
 ## Pipes
 
-- DatePipe
-- UpperCasePipe
-- TitleCasePipe
-- LowerCasePipe
-- CurrencyPipe
-- DecimalPipe - name is decimal but pipe name is number
-- PercentPipe
-- JsonPipe
-- SlicePipe
-- AsyncPipe
+- DatePipe - ` | date : '<formatValue available in angular.io doc>'`
+- UpperCasePipe - ` | uppercase`
+- TitleCasePipe - ` | titlecase`
+- LowerCasePipe - ` | lowercase`
+- CurrencyPipe - ` | currency : 'INR'`
+- DecimalPipe - name is decimal but pipe name is number - ` | number 'beforeDot.afterDotMin-afterDotMaxInclusive' : locale`
+- PercentPipe - ` | percent` (0.5 -> 50%, 1 -> 100%, 0.23 -> 23%)
+- JsonPipe - ` | json` (should only use for debugging mostly)
+- SlicePipe - ` | slice : 0:1` (: from:to) -> [from, to))
+- AsyncPipe - ``
 
 
 ## Adding bootstrap
@@ -90,8 +90,8 @@ Few alternatives
 1.  Add ngx-bootstrap or ng-bootstrap to the app using commands 
 ```ng add ngx-bootstrap``` and  ```ng add ng-bootstrap``` respectively.
 1. Install bootstrap directly using ```npm i bootstrap``` and then add import to global stysheet using 
-```@import '~path/to/bootstrap/node/module';```
-1. Add path to css to the angular styles in angular.json (This can work for any css and not just bootstrap)
+```@import '~path/to/bootstrap/node/module';```. Add excluding node_module in the path
+1. Add path to css to the angular styles in angular.json (This can work for any css and not just bootstrap). Add including node_module in the path
 
 
 ## Lifecycle hooks
@@ -105,3 +105,39 @@ Few alternatives
 1. ngAfterViewInit
 1. ngAfterViewChecked
 1. ngOnDestroy
+
+
+- Each lifecycle hook gets an interface that component needs to install
+
+### ngOnInit
+
+- After constructor completes, ngOnInit will be called.
+    - Constructors logic should be very simple and should not have any blocking call to fetch data from other service.
+    - ngOnInit is the place where you make some http/rpc calls to fetch data and initialize your component.
+
+### ngOnChanges
+
+#### Component Communication
+Ways how two components can communicate or interact with each other. Multiple ways to do so.
+1. Using @Input and @Output
+1. Using @ViewChild and @ContentChild
+1. Using Services
+
+#### Change Detection
+- By default when ChangeDetectionStragtegy is Default and not OnPush which means, by default when parent in updated all the children are searched for any changes. This can have performance impact if there are many children.
+
+- OnPush can be used only if data is not modified internally. Should use @Input @Output
+- OnPush does not update child if mutable object is updated. Use immutable objects.
+
+-ngOnChanges lifecycle hook can be applied only on the component that has @Input property.
+
+
+### ngDoCheck
+Is triggers if component is active and any other component's data changes
+Need not to use and should be used rarely. This is very expensive as is triggered for all changes.
+ngOnChanges and ngDoCheck should not be implemented at the same time in the same component.
+
+### ngAfterViewInit
+
+means after view child has initialized. This is case when view child has some blocking code in onInit.
+If this is not the case then using ```static: true``` in view child initialization, its instance can also be obtainied in parent.

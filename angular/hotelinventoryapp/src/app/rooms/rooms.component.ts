@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { RoomDetails, RoomType, Roomz } from './rooms';
 
 @Component({
@@ -6,7 +6,7 @@ import { RoomDetails, RoomType, Roomz } from './rooms';
   templateUrl: './rooms.component.html',
   styleUrls: ['./rooms.component.scss']
 })
-export class RoomsComponent {
+export class RoomsComponent implements OnInit {
   hotelName: string = 'Hotel Taj';
   roomDetails = {
     totalFloors: 7
@@ -17,24 +17,45 @@ export class RoomsComponent {
     bookedRooms: 50
   }
 
-  roomList: RoomDetails[] = []
+  roomList: RoomDetails[] = [];
+  isHotelOpen = false;
+  showRoomDetailsInTable = true;
+  selectedRooms: RoomDetails[] = [];
+  badData: string = "This is bad data, and it is not updated properly in all components";
+  goodData: string = "This is good data, and it is updated properly in all components";
 
   constructor() {
-    for(let i=1; i<=3; i++) {
-      for (let j=1; j<=2; j++) {
-          this.roomList.push({
-            roomNumber: i*100 + j,
-            photo: "Nai hai humare pass!",
-            floor: i,
-            price: Math.random() * 1000 + i * j,
-            roomType: this.getRoomType(i),
-            amenities: ["khana", "pina"],
-            checkinTime: new Date(),
-            checkoutTime: new Date(new Date().getTime() + 24*3600*1000)
-          })
+    // ideally below given code would be fetched by making some http/rpc call
+    // Hence this should not be the part of construtor and should be part of ngOnInit instead.
+    // for(let i=1; i<=3; i++) {
+    //   for (let j=1; j<=2; j++) {
+    //       this.roomList.push({
+    //         roomNumber: i*100 + j,
+    //         photo: "Nai hai humare pass!",
+    //         floor: i,
+    //         price: Math.random() * 1000 + i * j,
+    //         roomType: this.getRoomType(i),
+    //         amenities: ["khana", "pina"],
+    //         rating: Math.random()*10,
+    //         checkinTime: new Date(),
+    //         checkoutTime: new Date(new Date().getTime() + 24*3600*1000)
+    //       })
 
-      }
-    }
+    //   }
+    // }
+  }
+
+  toggle() {
+    this.isHotelOpen = !this.isHotelOpen;
+  }
+  bookAllRooms() {
+    this.rooms.bookedRooms += this.rooms.availableRooms;
+    this.rooms.availableRooms -= this.rooms.availableRooms;
+  }
+
+  freeAllRooms() {
+    this.rooms.availableRooms += this.rooms.bookedRooms;
+    this.rooms.bookedRooms -= this.rooms.bookedRooms;
   }
 
   private getRoomType(i: number): RoomType {
@@ -46,19 +67,46 @@ export class RoomsComponent {
     }
   }
 
-  isHotelOpen = false;
-
-  toggle() {
-    this.isHotelOpen = !this.isHotelOpen;
+  selectRoom(roomDetails: RoomDetails) {
+    if (this.selectedRooms.indexOf(roomDetails) == -1) {
+      this.selectedRooms = [...this.selectedRooms, roomDetails];
+    }
   }
 
-  bookAllRooms() {
-    this.rooms.bookedRooms += this.rooms.availableRooms;
-    this.rooms.availableRooms -= this.rooms.availableRooms;
+  finalizeAllRooms() {
+    this.selectedRooms.forEach(roomDetails => {
+      this.removeRoomFromList(roomDetails);
+    });
+    this.selectedRooms = [];
   }
 
-  freeAllRooms() {
-    this.rooms.availableRooms += this.rooms.bookedRooms;
-    this.rooms.bookedRooms -= this.rooms.bookedRooms;
+  caseCntr: number = 0;
+  changeGoodData = () => {
+    this.goodData = this.caseCntr%2 == 0 ? this.goodData.toUpperCase() : this.goodData.toLowerCase();
+    this.caseCntr++;
+  }
+
+  private removeRoomFromList(roomDetails: RoomDetails) {
+    const indexToRemove = this.roomList.indexOf(roomDetails);
+    this.roomList = [...this.roomList.slice(0, indexToRemove), ...this.roomList.slice(indexToRemove + 1)];
+  }
+
+  ngOnInit():void {
+    for(let i=1; i<=3; i++) {
+      for (let j=1; j<=2; j++) {
+          this.roomList.push({
+            roomNumber: i*100 + j,
+            photo: "Nai hai humare pass!",
+            floor: i,
+            price: Math.random() * 1000 + i * j,
+            roomType: this.getRoomType(i),
+            amenities: ["khana", "pina"],
+            rating: Math.random()*10,
+            checkinTime: new Date(),
+            checkoutTime: new Date(new Date().getTime() + 24*3600*1000)
+          })
+
+      }
+    }
   }
 }
