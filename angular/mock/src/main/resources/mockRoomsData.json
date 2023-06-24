@@ -1,0 +1,86 @@
+[
+  {
+    "roomNumber": 101,
+    "photo": "Nai hai humare pass!",
+    "floor": 1,
+    "price": 877,
+    "roomType": "NORMAL",
+    "amenities": [
+      "khana",
+      "pina"
+    ],
+    "rating": 8,
+    "checkinTime": 1687446713733,
+    "checkoutTime": 1687533113733
+  },
+  {
+    "roomNumber": 102,
+    "photo": "Nai hai humare pass!",
+    "floor": 1,
+    "price": 490,
+    "roomType": "NORMAL",
+    "amenities": [
+      "khana",
+      "pina"
+    ],
+    "rating": 9,
+    "checkinTime": 1687446713733,
+    "checkoutTime": 1687533113733
+  },
+  {
+    "roomNumber": 201,
+    "photo": "Nai hai humare pass!",
+    "floor": 2,
+    "price": 902,
+    "roomType": "LUXURY",
+    "amenities": [
+      "khana",
+      "pina"
+    ],
+    "rating": 5,
+    "checkinTime": 1687446713733,
+    "checkoutTime": 1687533113733
+  },
+  {
+    "roomNumber": 202,
+    "photo": "Nai hai humare pass!",
+    "floor": 2,
+    "price": 476,
+    "roomType": "LUXURY",
+    "amenities": [
+      "khana",
+      "pina"
+    ],
+    "rating": 6,
+    "checkinTime": 1687446713733,
+    "checkoutTime": 1687533113733
+  },
+  {
+    "roomNumber": 301,
+    "photo": "Nai hai humare pass!",
+    "floor": 3,
+    "price": 948,
+    "roomType": "TERI_AUKAT_SE_BAHAR",
+    "amenities": [
+      "khana",
+      "pina"
+    ],
+    "rating": 8,
+    "checkinTime": 1687446713733,
+    "checkoutTime": 1687533113733
+  },
+  {
+    "roomNumber": 302,
+    "photo": "Nai hai humare pass!",
+    "floor": 3,
+    "price": 958,
+    "roomType": "TERI_AUKAT_SE_BAHAR",
+    "amenities": [
+      "khana",
+      "pina"
+    ],
+    "rating": 6,
+    "checkinTime": 1687446713733,
+    "checkoutTime": 1687533113733
+  }
+]

@@ -1,11 +1,13 @@
 import { ChangeDetectionStrategy, Component, EventEmitter, Input, OnChanges, Output, SimpleChanges } from '@angular/core';
 import { RoomDetails } from '../rooms';
+import { RoomsService } from '../services/rooms.service';
 
 @Component({
   selector: 'hinv-rooms-list',
   templateUrl: './rooms-list.component.html',
   styleUrls: ['./rooms-list.component.scss'],
-  changeDetection: ChangeDetectionStrategy.OnPush
+  changeDetection: ChangeDetectionStrategy.OnPush,
+  providers: [RoomsService]/* Multiple instance injection */
 })
 export class RoomsListComponent implements OnChanges{
 
@@ -17,6 +19,11 @@ export class RoomsListComponent implements OnChanges{
   @Output() finalize = new EventEmitter<void>();
 
   // @Input() toggleRoomDetailsOptions: () => void = function(){};
+
+
+  constructor(private roomsService: RoomsService) {
+
+  }
 
   // this will not be appearing for ngoncgnages as is being internally updated
   toggleRoomDetailsOptions() {

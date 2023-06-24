@@ -1,12 +1,20 @@
-import { AfterContentChecked, AfterContentInit, Component, ContentChild, OnDestroy } from '@angular/core';
+import { AfterContentChecked, AfterContentInit, Component, ContentChild, Host, OnDestroy, Optional } from '@angular/core';
 import { HighpriocontComponent } from '../highpriocont/highpriocont.component';
+import { LoggerserviceService } from '../loggerservice.service';
+import { RoomsService } from '../rooms/services/rooms.service';
 
 @Component({
   selector: 'hinv-contcontainer',
   templateUrl: './contcontainer.component.html',
-  styleUrls: ['./contcontainer.component.scss']
+  styleUrls: ['./contcontainer.component.scss'],
+  providers: [RoomsService]
 })
 export class ContcontainerComponent implements AfterContentInit, OnDestroy {
+
+
+  constructor(@Host() private roomsService: RoomsService) {
+    
+  }
 
   @ContentChild(HighpriocontComponent) hpc !: HighpriocontComponent;
 

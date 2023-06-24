@@ -1,5 +1,6 @@
-import { AfterViewInit, ChangeDetectorRef, Component, ElementRef, OnInit, QueryList, ViewChild, ViewChildren, ViewContainerRef } from '@angular/core';
+import { AfterViewInit, ChangeDetectorRef, Component, ElementRef, Inject, OnInit, QueryList, ViewChild, ViewChildren, ViewContainerRef } from '@angular/core';
 import { HeaderComponent } from './header/header.component';
+import { LOCAL_STORAGE_TOKEN } from './AppConfig/localstorage.token';
 
 @Component({
   selector: 'hinv-root',
@@ -32,7 +33,10 @@ export class AppComponent implements OnInit, AfterViewInit {
 
   @ViewChild('customDecorableDiv', {static: true}) customDecorableDiv !: ElementRef;
 
-  constructor(private cd:ChangeDetectorRef){}
+  constructor(private cd:ChangeDetectorRef, 
+    @Inject(LOCAL_STORAGE_TOKEN)  private localStorage: Storage){
+      
+    }
 
   ngOnInit(): void {
       console.log(this.headerComponent);
@@ -51,6 +55,7 @@ export class AppComponent implements OnInit, AfterViewInit {
 
     this.headerComponent.appName = 'Angular Tutorial Title';
     this.cd.detectChanges();
+    this.localStorage.setItem("demoAng", "AngTSucks")
   }
 
 

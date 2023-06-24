@@ -1,5 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Optional } from '@angular/core';
 import { RoomDetails, RoomType, Roomz } from './rooms';
+import { RoomsService } from './services/rooms.service';
+import { LoggerserviceService } from '../loggerservice.service';
+import { HttpClient } from '@angular/common/http';
 
 @Component({
   selector: 'hinv-rooms',
@@ -24,7 +27,9 @@ export class RoomsComponent implements OnInit {
   badData: string = "This is bad data, and it is not updated properly in all components";
   goodData: string = "This is good data, and it is updated properly in all components";
 
-  constructor() {
+  constructor(/* Injecting services here */private roomsService: RoomsService,
+    private httpClient: HttpClient,
+    @Optional() private loggerService?: LoggerserviceService) {
     // ideally below given code would be fetched by making some http/rpc call
     // Hence this should not be the part of construtor and should be part of ngOnInit instead.
     // for(let i=1; i<=3; i++) {
@@ -58,15 +63,6 @@ export class RoomsComponent implements OnInit {
     this.rooms.bookedRooms -= this.rooms.bookedRooms;
   }
 
-  private getRoomType(i: number): RoomType {
-    switch(i) {
-      case 1: return RoomType.NORMAL;
-      case 2: return RoomType.LUXURY;
-      case 3: return RoomType.TERI_AUKAT_SE_BAHAR;
-      default: return RoomType.TERI_AUKAT_SE_BAHAR;
-    }
-  }
-
   selectRoom(roomDetails: RoomDetails) {
     if (this.selectedRooms.indexOf(roomDetails) == -1) {
       this.selectedRooms = [...this.selectedRooms, roomDetails];
@@ -82,7 +78,7 @@ export class RoomsComponent implements OnInit {
 
   caseCntr: number = 0;
   changeGoodData = () => {
-    this.goodData = this.caseCntr%2 == 0 ? this.goodData.toUpperCase() : this.goodData.toLowerCase();
+    this.goodData = this.caseCntr % 2 == 0 ? this.goodData.toUpperCase() : this.goodData.toLowerCase();
     this.caseCntr++;
   }
 
@@ -91,22 +87,10 @@ export class RoomsComponent implements OnInit {
     this.roomList = [...this.roomList.slice(0, indexToRemove), ...this.roomList.slice(indexToRemove + 1)];
   }
 
-  ngOnInit():void {
-    for(let i=1; i<=3; i++) {
-      for (let j=1; j<=2; j++) {
-          this.roomList.push({
-            roomNumber: i*100 + j,
-            photo: "Nai hai humare pass!",
-            floor: i,
-            price: Math.random() * 1000 + i * j,
-            roomType: this.getRoomType(i),
-            amenities: ["khana", "pina"],
-            rating: Math.random()*10,
-            checkinTime: new Date(),
-            checkoutTime: new Date(new Date().getTime() + 24*3600*1000)
-          })
-
-      }
-    }
+  ngOnInit(): void {
+    this.roomsService.fetchAllRooms().subscribe(rooms => {
+      this.roomList = rooms;
+    });
+    this.loggerService?.log("fetched all rooms");
   }
 }

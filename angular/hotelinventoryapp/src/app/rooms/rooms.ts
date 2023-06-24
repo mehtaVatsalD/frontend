@@ -18,8 +18,8 @@ interface RoomDetails {
     price: number;
     photo: string;
     rating: number;
-    checkinTime: Date;
-    checkoutTime: Date;
+    checkinTime: number;
+    checkoutTime: number;
 }
 
 export { Room as Roomz, RoomDetails, RoomType };
