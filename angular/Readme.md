@@ -1,3 +1,6 @@
+Good typescript blogs used while learning
+https://bobbyhadz.com/blog/typescript-object-parameter-default-value
+
 # Installation steps for angular
 1. Install Node and npm in your machine.
 1. Install vscode or any editor of your preference.
@@ -161,3 +164,14 @@ Services in angular can be created using angular cli using command
 - SkipSelf - Guaranteed that won't be injected in self and hence self can be skipped while finding service injection
 - Optional - Service may or may not be injected
 - Host - All compoenents inside the component where service is injected using @Host() will use the injected service. 
+
+## Interceptors
+New interceptors could be added using command  `ng g inerceptor <interceptorName>`
+
+## Route
+- Import RouteModule
+- forRoot method allows us to add multiple route config
+    - should be configured only once
+- default route
+- dynamic route
+- wildcard route

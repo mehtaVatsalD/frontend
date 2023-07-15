@@ -20,5 +20,7 @@
         <strong>blah blah blah</strong>
     </hinv-contcontainer>
     <button *ngIf="closeContainer" class="btn btn-success" (click)="closeContainer = false;">Container Kidhar Hai!</button>
-
+    <hr>
+    Running {{configData.env}}@{{configData.ver}}
 </div>
+<router-outlet></router-outlet>

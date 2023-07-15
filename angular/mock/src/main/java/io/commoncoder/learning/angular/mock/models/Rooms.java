@@ -1,6 +1,5 @@
 package io.commoncoder.learning.angular.mock.models;
 
-import com.google.common.collect.ImmutableList;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;

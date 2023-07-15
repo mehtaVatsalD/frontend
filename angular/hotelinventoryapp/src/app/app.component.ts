@@ -1,6 +1,7 @@
 import { AfterViewInit, ChangeDetectorRef, Component, ElementRef, Inject, OnInit, QueryList, ViewChild, ViewChildren, ViewContainerRef } from '@angular/core';
 import { HeaderComponent } from './header/header.component';
 import { LOCAL_STORAGE_TOKEN } from './AppConfig/localstorage.token';
+import { InitService } from './init.service';
 
 @Component({
   selector: 'hinv-root',
@@ -33,9 +34,12 @@ export class AppComponent implements OnInit, AfterViewInit {
 
   @ViewChild('customDecorableDiv', {static: true}) customDecorableDiv !: ElementRef;
 
+  public configData:{[key in "env" | "ver"]: string}
+
   constructor(private cd:ChangeDetectorRef, 
-    @Inject(LOCAL_STORAGE_TOKEN)  private localStorage: Storage){
-      
+    @Inject(LOCAL_STORAGE_TOKEN)  private localStorage: Storage,
+    public initService: InitService){
+      this.configData = initService.config;
     }
 
   ngOnInit(): void {

@@ -1,5 +1,5 @@
-import { NgModule } from '@angular/core';
-import { HttpClientModule } from '@angular/common/http';
+import { APP_INITIALIZER, NgModule } from '@angular/core';
+import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import { BrowserModule } from '@angular/platform-browser';
 
 import { AppRoutingModule } from './app-routing.module';
@@ -15,6 +15,8 @@ import { HighpriocontComponent } from './highpriocont/highpriocont.component';
 import { LowpriocontComponent } from './lowpriocont/lowpriocont.component';
 import { ContcontainerComponent } from './contcontainer/contcontainer.component';
 import { APP_CONFIG_IT, APP_CONFIG } from './AppConfig/appconfig.service';
+import { LoggingInterceptor } from './logging.interceptor';
+import { InitService } from './init.service';
 
 @NgModule({
   declarations: [
@@ -39,6 +41,19 @@ import { APP_CONFIG_IT, APP_CONFIG } from './AppConfig/appconfig.service';
     {
       provide: APP_CONFIG_IT,
       useValue: APP_CONFIG
+    },
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: LoggingInterceptor,
+      multi: true
+    },
+    {
+      provide: APP_INITIALIZER,
+      useFactory: function(initService: InitService) {
+        return () => initService.init();
+      },
+      deps: [InitService],
+      multi: true
     }
   ],
   bootstrap: [AppComponent]
