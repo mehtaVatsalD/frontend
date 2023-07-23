@@ -17,6 +17,17 @@ import { ContcontainerComponent } from './contcontainer/contcontainer.component'
 import { APP_CONFIG_IT, APP_CONFIG } from './AppConfig/appconfig.service';
 import { LoggingInterceptor } from './logging.interceptor';
 import { InitService } from './init.service';
+import { CompRoute1Component } from './comp-route1/comp-route1.component';
+import { JunkComponent } from './junk/junk.component';
+import { AppNavMainComponent } from './app-nav-main/app-nav-main.component';
+import { LayoutModule } from '@angular/cdk/layout';
+import { MatToolbarModule } from '@angular/material/toolbar';
+import { MatButtonModule } from '@angular/material/button';
+import { MatSidenavModule } from '@angular/material/sidenav';
+import { MatIconModule } from '@angular/material/icon';
+import { MatListModule } from '@angular/material/list';
+import { NotfoundComponent } from './notfound/notfound.component';
+import { CompRoutewithsub2Component } from './comp-routewithsub2/comp-routewithsub2.component';
 
 @NgModule({
   declarations: [
@@ -29,13 +40,24 @@ import { InitService } from './init.service';
     HeaderComponent,
     HighpriocontComponent,
     LowpriocontComponent,
-    ContcontainerComponent
+    ContcontainerComponent,
+    CompRoute1Component,
+    JunkComponent,
+    AppNavMainComponent,
+    NotfoundComponent,
+    CompRoutewithsub2Component
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     BrowserAnimationsModule,
     HttpClientModule,
+    LayoutModule,
+    MatToolbarModule,
+    MatButtonModule,
+    MatSidenavModule,
+    MatIconModule,
+    MatListModule,
   ],
   providers: [
     {

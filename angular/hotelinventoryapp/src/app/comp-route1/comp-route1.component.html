@@ -1,0 +1,14 @@
+<p>
+    This is component rendered at route 1
+</p>
+<div>
+    <div>
+        <button class="btn btn-primary" [routerLink]="['/route2/sub', -1]">Send -1</button>
+    </div>
+    <div>
+        <button class="btn btn-success" [routerLink]="['/route2/sub', 73.73]">Send 73.73</button>
+    </div>
+    <div>
+        <button class="btn btn-danger" [routerLink]="['/route2/sub', 'fkjs']">Send fkjs</button>
+    </div>
+</div>
