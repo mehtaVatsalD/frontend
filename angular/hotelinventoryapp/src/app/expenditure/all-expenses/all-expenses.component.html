@@ -1,0 +1,35 @@
+<div class="container">
+  <div [ngStyle]="{marginBottom: '20px'}">
+    <mat-slide-toggle (change)="toggleSamePageAddExpenseView($event)">Same page add new expense view?</mat-slide-toggle>
+  </div>
+  <button class="btn btn-success" [routerLink]="samePageAddExpenseView ? '/expenses/samePageNew': '/expenses/new'" id="addNewExpenseBtn">Add New Expense</button>
+  
+  <table class="table" *ngIf="(allExpenses$ | async)?.length != 0 ">
+    <thead>
+      <tr>
+        <th scope="col">#</th>
+        <th scope="col">ExpeenseId</th>
+        <th scope="col">Amount</th>
+        <th scope="col">Description</th>
+        <th scope="col">Tags</th>
+        <th scope="col">Last Updated</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let expense of allExpenses$ |  async ; let i = index " class="clickableRow">
+        <th scope="row">{{i+1}}</th>
+        <td>{{expense.expenseId}}</td>
+        <td>{{expense.amount}}</td>
+        <td>{{expense.description}}</td>
+        <td>{{expense.tags}}</td>
+        <td>{{(expense.updatedAt ? expense.updatedAt : expense.createdAt) * 1000 | date}}</td>
+      </tr>
+    </tbody>
+  </table>
+  <div *ngIf="(allExpenses$ | async)?.length == 0 ">
+    <div class="alert alert-info" role="alert">
+      No expenses to show!
+    </div>
+  </div>
+  <router-outlet *ngIf="samePageAddExpenseView"></router-outlet>
+</div>

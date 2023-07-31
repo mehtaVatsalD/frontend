@@ -1,0 +1,19 @@
+<p>Starting of dynamic component learning</p>
+<ng-template hinvRenderThis>
+    <p>Woho! Tempate being rendered using custom directive</p>
+</ng-template>
+<div *hinvRenderThis>
+    <p>What!</p>
+</div>
+<ng-template #autoEmbedTemplate>
+    <p>Am embed this without using any ts code but using ngTemplateOutlet!!!</p>
+</ng-template>
+
+<p>Ending of dynamic component learning</p>
+
+<div>
+    <p>This is some para after dynamic component ending</p>
+    <p>After this autoEmbedTemplate will be embeded </p>
+    <ng-container *ngTemplateOutlet="autoEmbedTemplate"></ng-container>
+    <div *ngTemplateOutlet="autoEmbedTemplate"></div>
+</div>

@@ -4,7 +4,7 @@ https://bobbyhadz.com/blog/typescript-object-parameter-default-value
 # Installation steps for angular
 1. Install Node and npm in your machine.
 1. Install vscode or any editor of your preference.
-1. Install angular cli globally using command: ```npm i @anular/cli -g```. You can also use npx to do so [Link for help for the same](https://stackoverflow.com/questions/54184357/npx-with-angular-cli-how-to-install-angular-cli-and-use-it-afterwards).
+1. Install angular cli globally using command: ```npm i -g @anular/cli```. You can also use npx to do so [Link for help for the same](https://stackoverflow.com/questions/54184357/npx-with-angular-cli-how-to-install-angular-cli-and-use-it-afterwards).
 1. Check the version of angular installed using ```ng version```. Note if you used npx then use npx in front of all commands you run like ```npx ng version``` (You can also add alias for ```alias ng=npx ng```). 
 
 
@@ -175,3 +175,49 @@ New interceptors could be added using command  `ng g inerceptor <interceptorName
 - default route
 - dynamic route
 - wildcard route
+
+
+## Template Driven Forms
+- Import FormsModule
+
+## Router service
+Programatic navigation to other url can be done using a service named `Router`. From the instance of this service we get two methods namely `navigate` and `navigateByUrl` to programatically route user to other page in the app.
+
+## Feature Module and Routing
+
+Concept named SCAM - Single component and module. For every new component, a new module is to be created and that new component should be coded/developed in that newly created module.
+Command to create new module: `ng g m <moduleName> --routing --flat=true`
+--routing flog will provide routing module alongside and --flat flag is helping in NOT creating new folder for this new module.
+
+- One component can be added as part of only single module
+- If a component in some module is to be used by componet of some other module, then that module (one that is being used) needs to be exported in the module which declares the component
+- Routes are checked for in sequence. If the routing module of main app is registered before the feature module having its own routing module, there are chances that routes in routing module of feature module might not work! Hence always have feature module registered before main app routing module in main app module.
+
+## Nested routes and child route
+- Add routes with variables(dynamic) after those without values
+
+## Production build
+
+`ng build -c=production`
+
+## Lazy Loaded Module
+
+While creating such lazy loaded module, not to keep code dependency of other module on this lazy loaded module.
+If there is any such case, abstract that out in yet another module and share that across! Lazy loaded module should not be dependent on.
+Only user interaction should ask for lazy loaded module!
+
+To generate lazy loaded module
+`ng g m <lazyLoadedModuleName> --routing --route=<routeNameWhereWeNeedToVisitThisModule> --module=<moduleToLazyLoadThisModule>`
+
+To generate module (non lazy loaded and then add components later)
+`ng g m <moduleName>`
+`ng g c <moduleName>` <---- This will create component with same name as module name.
+
+## ProvidedIn
+
+- root - create singleton instance of any service
+- any - one for ALL non-lazy loaded modules and then one for EACH lazy loaded modules
+
+Sample example provided in lecture -> create injection token and use it in such service (providedIn any). Then for lazy loaded component,
+if that value of injection token dependency is provided differently(using providers array in component), then service created for lazy loaded module,
+will get this new value!

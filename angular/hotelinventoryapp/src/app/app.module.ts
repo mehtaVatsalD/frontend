@@ -28,6 +28,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatListModule } from '@angular/material/list';
 import { NotfoundComponent } from './notfound/notfound.component';
 import { CompRoutewithsub2Component } from './comp-routewithsub2/comp-routewithsub2.component';
+import { DynacompComponent } from './junk/dynacomp/dynacomp.component';
 
 @NgModule({
   declarations: [
@@ -45,11 +46,11 @@ import { CompRoutewithsub2Component } from './comp-routewithsub2/comp-routewiths
     JunkComponent,
     AppNavMainComponent,
     NotfoundComponent,
-    CompRoutewithsub2Component
+    CompRoutewithsub2Component,
+    DynacompComponent,
   ],
   imports: [
     BrowserModule,
-    AppRoutingModule,
     BrowserAnimationsModule,
     HttpClientModule,
     LayoutModule,
@@ -58,6 +59,8 @@ import { CompRoutewithsub2Component } from './comp-routewithsub2/comp-routewiths
     MatSidenavModule,
     MatIconModule,
     MatListModule,
+    // ExpenditureModule,
+    AppRoutingModule,
   ],
   providers: [
     {
@@ -71,7 +74,7 @@ import { CompRoutewithsub2Component } from './comp-routewithsub2/comp-routewiths
     },
     {
       provide: APP_INITIALIZER,
-      useFactory: function(initService: InitService) {
+      useFactory: function (initService: InitService) {
         return () => initService.init();
       },
       deps: [InitService],
