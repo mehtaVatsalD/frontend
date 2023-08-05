@@ -29,6 +29,7 @@ import { MatListModule } from '@angular/material/list';
 import { NotfoundComponent } from './notfound/notfound.component';
 import { CompRoutewithsub2Component } from './comp-routewithsub2/comp-routewithsub2.component';
 import { DynacompComponent } from './junk/dynacomp/dynacomp.component';
+import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 
 @NgModule({
   declarations: [
@@ -59,6 +60,7 @@ import { DynacompComponent } from './junk/dynacomp/dynacomp.component';
     MatSidenavModule,
     MatIconModule,
     MatListModule,
+    MatSlideToggleModule,
     // ExpenditureModule,
     AppRoutingModule,
   ],

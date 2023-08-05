@@ -22,9 +22,7 @@ public class ExpenseServiceImpl implements ExpenseService {
     public AddExpenseResponseDTO addNewExpense(AddExpenseRequestDTO addExpenseRequestDTO) {
         Expense newExpense = mapToExpense(addExpenseRequestDTO);
         expenseMap.put(newExpense.getExpenseId(), newExpense);
-        return AddExpenseResponseDTO.builder()
-                .expenseId(newExpense.getExpenseId())
-                .build();
+        return mapToAddExpenseResponseDTO(newExpense);
     }
 
     @Override

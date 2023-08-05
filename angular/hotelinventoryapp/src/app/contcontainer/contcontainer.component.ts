@@ -23,7 +23,7 @@ export class ContcontainerComponent implements AfterContentInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
-      alert("ContContainer says: Ahh I am getting killed!");
+      // alert("ContContainer says: Ahh I am getting killed!");
   }
   
 

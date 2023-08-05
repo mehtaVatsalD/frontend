@@ -221,3 +221,61 @@ To generate module (non lazy loaded and then add components later)
 Sample example provided in lecture -> create injection token and use it in such service (providedIn any). Then for lazy loaded component,
 if that value of injection token dependency is provided differently(using providers array in component), then service created for lazy loaded module,
 will get this new value!
+
+## Routing Events and Route Guards
+
+router.events provides all flowing events when routing.
+This can even be filtered using pipe() for specific module.
+
+canActivae
+canActiveChild
+canLoad - prevents even loading of lazy loaded module if canLoad returns false!
+
+## Reactive Forms
+- Setting up reactive forms
+- Creating Form
+- Adding controls dynamically
+- Built-in validations
+- Submit and reset forms
+- Listening to form value changes using valueChanges
+- patch value vs setValue
+    - setValue needs value for all fields where as it is not the case with patchValue
+- using rxjs map operators
+- Implementing custom validations
+
+- Import ReactiveFormsModule to module
+- In reactive forms we create forms using typescript
+- It is good for developers who like to have more control in ts file
+- Uses forms api like FormGroup, FormControl, Form directives like FormControl 
+
+- Use FormControl class to create Form Controls
+- Use FormGroup to group multiple controls
+- Use FormBuilder (this is a service ) to build complex forms
+
+`
+addControl and removeControl to add and remove controls of forms respectively =.
+
+
+[formArrayName] using proper name -> [formGroupName] using index value -> [formControlName] exact repeated form control's name
+so when name of array, group and control is not available and is reapeated index is to be used.
+
+to access each form field model, 
+addExpenseForm.get('metadata')?.get('tags')?.get(i.toString())?.get('tagVal')?.hasError('pattern')
+or
+addExpenseForm.get('metadata.tags.' + i + '.tagVal')?.hasError('pattern')
+or
+addExpenseForm.get(['metadata', 'tags', i, 'tagVal'])?.hasError('pattern')
+
+*ngIf="reactiveFormGroup.get('someDynamicallyAddedField')" <--- helps to only render if field is added by some user action
+
+`
+
+
+To add validations one of the standard way is same like in template driven forms wherein we add required, min, pattern etc attibutes to input
+Other way is via Validators class which can be seen in corresponding ts file 
+
+** updatOn **
+- change (default) - for any value change
+- submit - on form submission
+- blur - when input field is out for focus
+Same is also possible in template driven forms using [ngModelOptions]

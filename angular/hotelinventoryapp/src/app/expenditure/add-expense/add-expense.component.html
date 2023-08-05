@@ -3,41 +3,90 @@
 {{addNewExpenseForm.dirty}}
 {{addNewExpenseForm.invalid}}
 {{addNewExpenseForm.value | json}} -->
-<div class="container" hinvWastefulExpenseChangeBg [wastefulExpense]="newExpense.wastefulExpense">
-    <form (ngSubmit)="addNewExpense()" #addNewExpenseForm="ngForm">
-        <div class="form-floating">
-            <input class="form-control" type="number" name="expenseAmount" placeholder="Enter expense amount"
-                [(ngModel)]="newExpense.amount" #expenseAmount="ngModel" min="0" required>
-            <label for="expenseAmount">Amount</label>
-            <div *ngIf="expenseAmount.dirty && expenseAmount.errors" class="alert alert-danger">
-                {{expenseAmount.errors | json}}
-            </div>
-        </div>
-        <div class="form-floating">
-            <input class="form-control" type="text" name="expenseDescription" placeholder="Enter description"
-                [(ngModel)]="newExpense.description" required minlength="5" #expenseDescription="ngModel">
-            <label for="expenseDescription">Description</label>
-            <div *ngIf="expenseDescription.dirty && expenseDescription.errors" class="alert alert-danger">
-                {{expenseDescription.errors | json}}
-            </div>
-        </div>
-        <div class="form-floating">
-            <input class="form-control" type="text" name="expenseTags" placeholder="Enter comma separated tags"
-                [(ngModel)]="newExpense.tags" required #expenseTags="ngModel" pattern="((\s*[\w-]+\s*)(,(\s*[\w-]+\s*))*)+">
-            <label for="expenseTags">Tags</label>
-            <div *ngIf="expenseTags.dirty && expenseTags.errors" class="alert alert-danger">
-                {{expenseTags.errors | json}}
-            </div>
-        </div>
-        <div>
-            <mat-slide-toggle (change)="wastefulExpenseValChange($event)">Wasteful Expense</mat-slide-toggle>
-        </div>
-        <div class="formSubmitButtons">
-            <button class="btn btn-primary" type="submit" [disabled]="addNewExpenseForm.invalid">Add Expense</button>
-            <button class="btn btn-danger" type="reset">Reset</button>
-        </div>
-    </form>
-    <hinv-expenseemitter #someTempVar="expenseEmit" hinvExpenseemitbgchanger>
-        <p *ngIf="someTempVar.someVarToBeAccessedUsingTempRefVar"></p>
-    </hinv-expenseemitter>
+<div
+  class="container"
+  hinvWastefulExpenseChangeBg
+  [wastefulExpense]="newExpense.wastefulExpense"
+>
+  <form
+    (ngSubmit)="addNewExpense(addNewExpenseForm)"
+    #addNewExpenseForm="ngForm"
+  >
+    <div class="form-floating">
+      <input
+        class="form-control"
+        type="number"
+        name="expenseAmount"
+        placeholder="Enter expense amount"
+        [(ngModel)]="newExpense.amount"
+        #expenseAmount="ngModel"
+        min="0"
+        required
+      />
+      <label for="expenseAmount">Amount</label>
+      <div
+        *ngIf="expenseAmount.dirty && expenseAmount.errors"
+        class="alert alert-danger"
+      >
+        {{ expenseAmount.errors | json }}
+      </div>
+    </div>
+    <div class="form-floating">
+      <input
+        class="form-control"
+        type="text"
+        name="expenseDescription"
+        placeholder="Enter description"
+        [(ngModel)]="newExpense.description"
+        required
+        minlength="5"
+        #expenseDescription="ngModel"
+        hinvNotTestTextValidator
+      />
+      <label for="expenseDescription">Description</label>
+      <div
+        *ngIf="expenseDescription.dirty && expenseDescription.errors"
+        class="alert alert-danger"
+      >
+        {{ expenseDescription.errors | json }}
+      </div>
+    </div>
+    <div class="form-floating">
+      <input
+        class="form-control"
+        type="text"
+        name="expenseTags"
+        placeholder="Enter comma separated tags"
+        [(ngModel)]="newExpense.tags"
+        required
+        #expenseTags="ngModel"
+        pattern="((\s*[\w-]+\s*)(,(\s*[\w-]+\s*))*)+"
+      />
+      <label for="expenseTags">Tags</label>
+      <div
+        *ngIf="expenseTags.dirty && expenseTags.errors"
+        class="alert alert-danger"
+      >
+        {{ expenseTags.errors | json }}
+      </div>
+    </div>
+    <div>
+      <mat-slide-toggle (change)="wastefulExpenseValChange($event)"
+        >Wasteful Expense</mat-slide-toggle
+      >
+    </div>
+    <div class="formSubmitButtons">
+      <button
+        class="btn btn-primary"
+        type="submit"
+        [disabled]="addNewExpenseForm.invalid"
+      >
+        Add Expense
+      </button>
+      <button class="btn btn-danger" type="reset">Reset</button>
+    </div>
+  </form>
+  <hinv-expenseemitter #someTempVar="expenseEmit" hinvExpenseemitbgchanger>
+    <p *ngIf="someTempVar.someVarToBeAccessedUsingTempRefVar"></p>
+  </hinv-expenseemitter>
 </div>

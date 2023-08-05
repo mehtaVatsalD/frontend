@@ -10,5 +10,5 @@ import { interval } from 'rxjs';
 export class ExpenseemitterComponent {
 
   someVarToBeAccessedUsingTempRefVar: boolean  = false;
-  @Output() emitNumbers = interval(1000);
+  @Output() emitNumbers = interval(100000000);
 }

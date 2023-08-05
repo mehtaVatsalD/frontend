@@ -1,0 +1,217 @@
+<!-- To add validations one of the standard way is same like in template driven forms wherein we add required, min, pattern etc attibutes to input -->
+<!-- Other way is via Validators class which can be seen in corresponding ts file -->
+<div class="container">
+  <div>
+    <p>
+      {{ addExpenseForm.get('metadata.tags')?.errors | json }}
+    </p>
+  </div>
+  <div class="addExpenseFormContainer">
+    <form
+      [formGroup]="addExpenseForm"
+      class="example-form"
+      (ngSubmit)="addNewExpense()"
+    >
+      <!-- Amount field -->
+      <mat-form-field class="example-full-width">
+        <mat-label>Amount</mat-label>
+        <input
+          type="number"
+          matInput
+          formControlName="amount"
+          placeholder="Eg. 20"
+        />
+        <mat-error *ngIf="addExpenseForm.get('amount')?.hasError('required')">
+          Amount is <strong>required</strong>
+        </mat-error>
+        <mat-error *ngIf="addExpenseForm.get('amount')?.hasError('min')">
+          Postive value of amount is needed.
+        </mat-error>
+      </mat-form-field>
+
+      <!-- Expense date field -->
+      <mat-form-field class="example-full-width">
+        <mat-label>Choose a date of expense</mat-label>
+        <input
+          matInput
+          [matDatepicker]="picker"
+          formControlName="expenseDate"
+        />
+        <mat-hint>MM/DD/YYYY</mat-hint>
+        <mat-datepicker-toggle
+          matIconSuffix
+          [for]="picker"
+        ></mat-datepicker-toggle>
+        <mat-datepicker #picker></mat-datepicker>
+        <mat-error
+          *ngIf="addExpenseForm.get('expenseDate')?.hasError('required')"
+        >
+          Date of expense is <strong>required</strong>
+        </mat-error>
+        <mat-error
+          *ngIf="
+            addExpenseForm.get('expenseDate')?.hasError('matDatepickerParse')
+          "
+        >
+          Enter valid date in MM/DD/YYYY
+        </mat-error>
+      </mat-form-field>
+
+      <!-- Metadata fields about expense -->
+      <div formGroupName="metadata">
+        <!-- Description field -->
+        <mat-form-field class="example-full-width">
+          <mat-label>Description</mat-label>
+          <input
+            type="text"
+            matInput
+            formControlName="description"
+            placeholder="Eg. For purchasing milk"
+          />
+          <mat-error
+            *ngIf="
+              addExpenseForm
+                .get('metadata')
+                ?.get('description')
+                ?.hasError('required')
+            "
+          >
+            Description is <strong>required</strong>
+          </mat-error>
+          <mat-error
+            *ngIf="
+              addExpenseForm
+                .get(['metadata', 'description'])
+                ?.hasError('invalidTextContainingTest')
+            "
+          >
+            Should not contain test!
+          </mat-error>
+        </mat-form-field>
+
+        <!-- Tags field -->
+        <!-- <mat-form-field class="example-full-width">
+                    <mat-label>Tags</mat-label>
+                    <input type="text" matInput formControlName="tags"
+                            placeholder="Eg. food-and-groceries, milk, daily_item" required pattern="((\s*[\w]+(-[\w])*\s*)(,(\s*[\w]+(-[\w])*\s*))*)+">
+                    <mat-error *ngIf="addExpenseForm.get('metadata')?.get('tags')?.hasError('required')">
+                        Tags is <strong>required</strong>
+                    </mat-error>
+                    <mat-error *ngIf="addExpenseForm.get('metadata')?.get('tags')?.hasError('pattern')">
+                        Tags should be valid and comma separated. Eg. food-and-groceries, milk, daily_item (Each valid tag can contain a-z, A-Z, 0-9, - and _)
+                    </mat-error>
+                </mat-form-field> -->
+
+        <div formArrayName="tags">
+          <div
+            *ngFor="let tag of tags.controls; let i = index"
+            [formGroupName]="i"
+          >
+            <mat-form-field class="example-full-width">
+              <mat-label>Tag {{ i + 1 }}</mat-label>
+              <input
+                type="text"
+                matInput
+                formControlName="tagVal"
+                placeholder="Eg. food-and-groceries/milk/daily_item"
+              />
+              <button mat-icon-button matSuffix (click)="deleteTag(i)">
+                <mat-icon>delete</mat-icon>
+              </button>
+              <mat-error
+                *ngIf="
+                  addExpenseForm
+                    .get('metadata')
+                    ?.get('tags')
+                    ?.get(i.toString())
+                    ?.get('tagVal')
+                    ?.hasError('required')
+                "
+              >
+                Tag value is <strong>required</strong>
+              </mat-error>
+              <mat-error
+                *ngIf="
+                  addExpenseForm
+                    .get(['metadata', 'tags', i, 'tagVal'])
+                    ?.hasError('pattern')
+                "
+              >
+                Tags should be valid and comma separated. Eg.
+                food-and-groceries, milk, daily_item (Each valid tag can contain
+                a-z, A-Z, 0-9, - and _)
+              </mat-error>
+              <mat-error
+                *ngIf="
+                  addExpenseForm
+                    .get(['metadata', 'tags', i, 'tagVal'])
+                    ?.hasError('invalidTextContainingTest')
+                "
+              >
+                Should not contain test!
+              </mat-error>
+              <mat-error
+                *ngIf="
+                  addExpenseForm
+                    .get(['metadata', 'tags', i, 'tagVal'])
+                    ?.hasError('notAllowedWordMatched')
+                "
+              >
+                Tag should not contain banned word '{{
+                  addExpenseForm
+                    .get(["metadata", "tags", i, "tagVal"])
+                    ?.getError("notAllowedWordMatched")
+                }}'
+              </mat-error>
+            </mat-form-field>
+          </div>
+          <mat-error
+            *ngIf="
+              addExpenseForm.hasError('doesNotIncludeLargeTag')
+            "
+          >
+            Atleast one tag containing word 'large' should be present
+          </mat-error>
+          <mat-error
+            *ngIf="
+              addExpenseForm.get('metadata.tags')
+                ?.hasError('doesNotIncludeLateTag')
+            "
+          >
+            Atleast one tag containing word 'late' should be present
+          </mat-error>
+        </div>
+      </div>
+
+      <div class="formSubmitButtons">
+        <button
+          mat-raised-button
+          color="accent"
+          type="button"
+          (click)="addTag()"
+        >
+          Add Tag
+        </button>
+      </div>
+
+      <div class="formSubmitButtons">
+        <button
+          mat-raised-button
+          color="primary"
+          type="submit"
+          [disabled]="addExpenseForm.invalid"
+        >
+          Submit Expense
+        </button>
+        <button
+          mat-raised-button
+          color="warn"
+          type="button"
+          (click)="resetForm()"
+        >
+          Reset
+        </button>
+      </div>
+    </form>
+  </div>
+</div>

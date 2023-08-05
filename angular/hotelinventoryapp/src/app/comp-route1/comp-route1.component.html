@@ -11,4 +11,7 @@
     <div>
         <button class="btn btn-danger" [routerLink]="['/route2/sub', 'fkjs']">Send fkjs</button>
     </div>
+    <div [ngStyle]="{marginBottom: '20px'}" >
+        <mat-slide-toggle (change)="toggleAllowJunk($event)" [checked]="getAllowJunk() | async">Allow Junk?</mat-slide-toggle>
+    </div>
 </div>
